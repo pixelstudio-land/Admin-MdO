@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Zap, ShieldCheck, Handshake, Check, MessageCircle, X } from 'lucide-react';
 import './CoringaStyles.css';
 
 interface CoringaMachineProps {
@@ -120,7 +120,7 @@ export default function CoringaMachine({ subdominio }: CoringaMachineProps) {
             <div>{data.nome_marca1} <span>{data.nome_marca2}</span></div>
           </div>
           <a href={`https://wa.me/${data.whatsapp}`} target="_blank" rel="noopener noreferrer" className="btn-zap-header">
-            <i className="fab fa-whatsapp"></i> <span>WhatsApp</span>
+            <MessageCircle size={18} /> <span>WhatsApp</span>
           </a>
         </div>
       </header>
@@ -185,17 +185,23 @@ export default function CoringaMachine({ subdominio }: CoringaMachineProps) {
 
           <div className="feature-grid">
             <div className="feature-item">
-              <i className="fas fa-bolt"></i>
+              <div className="icon-wrapper">
+                <Zap size={32} />
+              </div>
               <h3>Instalação Rápida</h3>
               <p>Equipe rápida e limpa. Entregamos sua obra sem dor de cabeça.</p>
             </div>
             <div className="feature-item">
-              <i className="fas fa-medal"></i>
+              <div className="icon-wrapper">
+                <ShieldCheck size={32} />
+              </div>
               <h3>Garantia Total</h3>
               <p>Segurança na instalação e nos materiais utilizados.</p>
             </div>
             <div className="feature-item">
-              <i className="fas fa-comments-dollar"></i>
+              <div className="icon-wrapper">
+                <Handshake size={32} />
+              </div>
               <h3>Negociação Direta</h3>
               <p>Fale diretamente com quem resolve e pague facilitado.</p>
             </div>
@@ -219,7 +225,9 @@ export default function CoringaMachine({ subdominio }: CoringaMachineProps) {
       {modalOpen && (
         <div className="modal-overlay" onClick={(e) => { if (e.target === e.currentTarget) setModalOpen(false); }}>
           <div className="modal-content">
-            <span className="close-modal" onClick={() => setModalOpen(false)}>&times;</span>
+            <span className="close-modal" onClick={() => setModalOpen(false)}>
+              <X size={28} />
+            </span>
 
             <h3>Orçamento Estimado</h3>
 
@@ -232,17 +240,20 @@ export default function CoringaMachine({ subdominio }: CoringaMachineProps) {
               <p style={{ marginBottom: '10px', fontWeight: 600 }}>Condições Exclusivas Hoje:</p>
               {(data.json_bonus || []).map((bonus: any, i: number) => (
                 <div key={i} className={`bonus-item ${bonus.gratis ? 'free' : ''}`}>
-                  <span><i className="fas fa-check"></i> {bonus.titulo}</span>
+                  <div className="flex-icon">
+                    <Check size={18} className="icon-check" />
+                    <span>{bonus.titulo}</span>
+                  </div>
                   <span>
                     {bonus.strike && <span className="strike">{bonus.strike}</span>}
-                    {bonus.subtitulo}
+                    {bonus.gratis ? <span className="free-text">{bonus.subtitulo}</span> : <span>{bonus.subtitulo}</span>}
                   </span>
                 </div>
               ))}
             </div>
 
             <a href={linkZap} className="btn-action" target="_blank" rel="noopener noreferrer">
-              AGENDAR VISITA <i className="fab fa-whatsapp"></i>
+              AGENDAR VISITA <MessageCircle size={20} />
             </a>
 
             <p className="disclaimer">

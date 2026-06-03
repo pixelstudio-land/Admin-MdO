@@ -47,6 +47,41 @@ export default function MachineForm() {
   const [corSecundaria, setCorSecundaria] = useState('#000000');
   const [logoUrl, setLogoUrl] = useState('');
   const [fundoUrl, setFundoUrl] = useState('');
+  const [uploadingLogo, setUploadingLogo] = useState(false);
+  const [uploadingFundo, setUploadingFundo] = useState(false);
+
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>, isLogo: boolean) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (isLogo) setUploadingLogo(true);
+    else setUploadingFundo(true);
+
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random().toString(36).substring(2, 15)}_${Date.now()}.${fileExt}`;
+      const filePath = `${subdominio || 'cliente'}/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('assets')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('assets')
+        .getPublicUrl(filePath);
+
+      if (isLogo) setLogoUrl(publicUrl);
+      else setFundoUrl(publicUrl);
+
+    } catch (error: any) {
+      alert(`Erro ao fazer upload: ${error.message}`);
+    } finally {
+      if (isLogo) setUploadingLogo(false);
+      else setUploadingFundo(false);
+    }
+  };
   const [pisos, setPisos] = useState<Piso[]>(DEFAULT_PISOS);
   const [opcoesPiso, setOpcoesPiso] = useState<OpcaoPiso[]>(DEFAULT_OPCOES);
   const [bonus, setBonus] = useState<Bonus[]>(DEFAULT_BONUS);
@@ -216,15 +251,43 @@ export default function MachineForm() {
           </div>
           <div>
             <label className="block text-sm font-medium text-neutral-300 mb-2">
-              <Image className="inline w-4 h-4 mr-1.5" />URL da Logo
+              <Image className="inline w-4 h-4 mr-1.5" />Logotipo da Empresa
             </label>
-            <input value={logoUrl} onChange={e => setLogoUrl(e.target.value)} placeholder="https://..." className="w-full bg-neutral-950 border border-neutral-700 rounded-lg px-4 py-2.5 text-white placeholder-neutral-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" />
+            <div className="flex items-center space-x-4 bg-neutral-950 border border-neutral-700 rounded-lg p-2">
+              {logoUrl ? (
+                <div className="relative">
+                  <img src={logoUrl} alt="Logo" className="h-12 w-auto object-contain bg-neutral-800 rounded p-1" />
+                  <button onClick={() => setLogoUrl('')} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 shadow hover:bg-red-600 transition">
+                    <Trash2 className="w-3 h-3" />
+                  </button>
+                </div>
+              ) : (
+                <label className="flex-1 flex items-center justify-center h-12 border border-dashed border-neutral-600 hover:border-blue-500 rounded cursor-pointer transition text-neutral-500 hover:text-blue-500">
+                  {uploadingLogo ? <Loader2 className="w-5 h-5 animate-spin" /> : <span className="text-sm">Clique para enviar imagem</span>}
+                  <input type="file" accept="image/*" className="hidden" onChange={e => handleImageUpload(e, true)} disabled={uploadingLogo} />
+                </label>
+              )}
+            </div>
           </div>
           <div>
             <label className="block text-sm font-medium text-neutral-300 mb-2">
-              <Image className="inline w-4 h-4 mr-1.5" />URL da Imagem de Fundo (Hero)
+              <Image className="inline w-4 h-4 mr-1.5" />Imagem de Fundo (Hero)
             </label>
-            <input value={fundoUrl} onChange={e => setFundoUrl(e.target.value)} placeholder="https://..." className="w-full bg-neutral-950 border border-neutral-700 rounded-lg px-4 py-2.5 text-white placeholder-neutral-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" />
+            <div className="flex items-center space-x-4 bg-neutral-950 border border-neutral-700 rounded-lg p-2">
+              {fundoUrl ? (
+                <div className="relative flex-1">
+                  <div className="h-24 w-full bg-cover bg-center rounded" style={{ backgroundImage: `url(${fundoUrl})` }}></div>
+                  <button onClick={() => setFundoUrl('')} className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1.5 shadow hover:bg-red-600 transition">
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+              ) : (
+                <label className="flex-1 flex items-center justify-center h-24 border border-dashed border-neutral-600 hover:border-blue-500 rounded cursor-pointer transition text-neutral-500 hover:text-blue-500">
+                  {uploadingFundo ? <Loader2 className="w-5 h-5 animate-spin" /> : <span className="text-sm">Clique para enviar imagem de fundo</span>}
+                  <input type="file" accept="image/*" className="hidden" onChange={e => handleImageUpload(e, false)} disabled={uploadingFundo} />
+                </label>
+              )}
+            </div>
           </div>
           {/* Color Preview */}
           <div className="p-4 rounded-xl overflow-hidden border border-white/5" style={{ background: corSecundaria }}>

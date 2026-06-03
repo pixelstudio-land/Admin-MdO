@@ -1,16 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;700;800;900&display=swap');
+
 .coringa-app {
-  font-family: 'Open Sans', sans-serif;
-  color: #333;
+  font-family: 'Inter', sans-serif;
+  color: #1a1a1a;
   line-height: 1.6;
-  background-color: #fff;
+  background-color: #fafafa;
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 
 .coringa-app h1,
 .coringa-app h2,
 .coringa-app h3 {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.5px;
 }
 
 .coringa-app .container {
@@ -22,12 +26,14 @@
 /* --- HEADER --- */
 .coringa-app header {
   background: var(--secondary);
-  padding: 12px 0;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 15px 0;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
   position: fixed;
   width: 100%;
   top: 0;
   z-index: 1000;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .coringa-app header .flex {
@@ -40,8 +46,9 @@
 .coringa-app .logo {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 1.2rem;
+  gap: 12px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.4rem;
   font-weight: 900;
   color: #fff;
   letter-spacing: -0.5px;
@@ -49,8 +56,9 @@
 }
 
 .coringa-app .logo img {
-  height: 35px;
+  height: 40px;
   width: auto;
+  object-fit: contain;
 }
 
 .coringa-app .logo span {
@@ -59,42 +67,53 @@
 
 /* Botão Header */
 .coringa-app .btn-zap-header {
-  background: #25D366;
+  background: var(--accent);
   color: white;
-  padding: 8px 16px;
+  padding: 10px 20px;
   border-radius: 50px;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 0.9rem;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   white-space: nowrap;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+}
+
+.coringa-app .btn-zap-header:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
 }
 
 /* --- HERO SECTION --- */
 .coringa-app .hero {
+  background-image: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.8)), var(--bg-hero);
   background-size: cover;
   background-position: center;
+  background-attachment: fixed;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   color: white;
-  padding: 90px 0 60px 0;
+  padding: 120px 0 60px 0;
 }
 
 .coringa-app .hero-content {
-  max-width: 800px;
+  max-width: 900px;
   width: 100%;
 }
 
 .coringa-app .hero h1 {
-  font-size: 2rem;
-  margin-bottom: 10px;
+  font-size: 3rem;
+  margin-bottom: 15px;
   text-transform: uppercase;
-  line-height: 1.2;
+  line-height: 1.1;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.5);
 }
 
 .coringa-app .hero h1 span {
@@ -102,202 +121,306 @@
 }
 
 .coringa-app .hero p {
-  font-size: 1rem;
-  margin-bottom: 25px;
+  font-size: 1.2rem;
+  margin-bottom: 40px;
   opacity: 0.9;
+  font-weight: 300;
 }
 
-/* --- CALCULADORA --- */
+/* --- CALCULADORA (GLASSMORPHISM) --- */
 .coringa-app .calculator-box {
-  background: white;
-  color: var(--secondary);
-  padding: 25px;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  padding: 35px 30px;
+  border-radius: 24px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.1);
   max-width: 500px;
   margin: 0 auto;
   text-align: left;
-  border-top: 5px solid var(--primary);
+  position: relative;
+  overflow: hidden;
+}
+
+.coringa-app .calculator-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), transparent);
 }
 
 .coringa-app .form-group {
-  margin-bottom: 12px;
+  margin-bottom: 20px;
 }
 
 .coringa-app .form-group label {
   display: block;
+  font-family: 'Outfit', sans-serif;
   font-weight: 600;
-  margin-bottom: 5px;
-  font-size: 0.85rem;
-  color: #555;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.5px;
 }
 
 .coringa-app .form-group input,
 .coringa-app .form-group select {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 0.95rem;
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
   outline: none;
-  transition: 0.3s;
-  background: #f9f9f9;
-  color: #333;
+  transition: all 0.3s;
+  background: rgba(0, 0, 0, 0.2);
+  color: #fff;
+}
+
+.coringa-app .form-group input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.coringa-app .form-group select option {
+  background: var(--secondary);
+  color: #fff;
 }
 
 .coringa-app .form-group input:focus,
 .coringa-app .form-group select:focus {
   border-color: var(--primary);
-  background: #fff;
+  background: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.05);
 }
 
 .coringa-app .btn-calc {
   width: 100%;
-  background: var(--secondary);
-  color: #fff;
-  border: 1px solid var(--primary);
-  padding: 15px;
-  font-size: 1rem;
-  font-weight: 700;
+  background: var(--primary);
+  color: var(--secondary);
+  border: none;
+  padding: 18px;
+  font-size: 1.1rem;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
   text-transform: uppercase;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   margin-top: 10px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
 
 .coringa-app .btn-calc:hover {
-  background: var(--primary);
-  color: var(--secondary);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+  filter: brightness(1.1);
 }
 
-/* --- MODAL (Resultado) --- */
+.coringa-app .btn-calc:active {
+  transform: translateY(1px);
+}
+
+/* --- MODAL (Resultado Premium) --- */
 .coringa-app .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   z-index: 2000;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
 }
 
 .coringa-app .modal-content {
   background: white;
-  color: #333;
-  padding: 25px;
-  border-radius: 15px;
-  max-width: 500px;
+  color: #1a1a1a;
+  padding: 40px;
+  border-radius: 24px;
+  max-width: 450px;
   width: 100%;
   text-align: center;
   position: relative;
-  animation: slideUp 0.4s ease;
-  border-top: 5px solid var(--primary);
+  transform: scale(0.95) translateY(20px);
+  animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.4);
 }
 
-@keyframes slideUp {
-  from { transform: translateY(50px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+@keyframes modalPop {
+  to { transform: scale(1) translateY(0); }
 }
 
 .coringa-app .close-modal {
   position: absolute;
-  top: 15px;
-  right: 20px;
-  font-size: 1.5rem;
+  top: 20px;
+  right: 25px;
+  font-size: 1.8rem;
   cursor: pointer;
   color: #999;
+  transition: color 0.3s;
+  line-height: 1;
+}
+
+.coringa-app .close-modal:hover {
+  color: #333;
+}
+
+.coringa-app .modal-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: var(--secondary);
 }
 
 .coringa-app .price-display {
-  background: #f4f4f4;
-  padding: 15px;
-  border-radius: 10px;
-  margin: 15px 0;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  padding: 25px 20px;
+  border-radius: 16px;
+  margin: 20px 0;
+  border: 1px solid rgba(0,0,0,0.05);
 }
 
 .coringa-app .total-label {
-  font-size: 0.8rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #666;
+  letter-spacing: 1.5px;
+  color: #6c757d;
   font-weight: 700;
+  margin-bottom: 8px;
 }
 
 .coringa-app .total-value {
-  font-size: 2.2rem;
+  font-size: 2.8rem;
+  font-family: 'Outfit', sans-serif;
   font-weight: 900;
   color: var(--secondary);
+  line-height: 1;
+  letter-spacing: -1px;
 }
 
 .coringa-app .bonus-list {
   text-align: left;
-  margin-bottom: 20px;
-  border: 1px dashed #ccc;
-  padding: 15px;
-  border-radius: 8px;
+  margin-bottom: 30px;
+  padding: 0 10px;
 }
 
 .coringa-app .bonus-item {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 8px;
-  font-size: 0.85rem;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eee;
 }
 
-.coringa-app .bonus-item.free {
+.coringa-app .bonus-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.coringa-app .bonus-item .flex-icon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.coringa-app .bonus-item .icon-check {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.coringa-app .bonus-item.free .icon-check {
   color: #27ae60;
-  font-weight: 700;
+}
+
+.coringa-app .bonus-item.free .free-text {
+  color: #27ae60;
+  font-weight: 800;
+  font-family: 'Outfit', sans-serif;
+  background: rgba(39, 174, 96, 0.1);
+  padding: 4px 10px;
+  border-radius: 50px;
+  font-size: 0.8rem;
 }
 
 .coringa-app .strike {
   text-decoration: line-through;
-  color: #e74c3c;
-  margin-right: 5px;
-  font-weight: 400;
-  font-size: 0.8rem;
+  color: #adb5bd;
+  margin-right: 8px;
+  font-weight: 500;
+  font-size: 0.85rem;
 }
 
 .coringa-app .btn-action {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   width: 100%;
-  background: #25D366;
+  background: var(--accent);
   color: white;
-  padding: 15px;
+  padding: 18px;
   text-decoration: none;
-  font-weight: 700;
-  border-radius: 8px;
-  font-size: 1rem;
-  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-  animation: pulse 2s infinite;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
 }
 
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.02); }
-  100% { transform: scale(1); }
+.coringa-app .btn-action::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: shine 3s infinite;
+}
+
+@keyframes shine {
+  to { left: 200%; }
+}
+
+.coringa-app .btn-action:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px rgba(37, 211, 102, 0.4);
 }
 
 .coringa-app .disclaimer {
-  margin-top: 15px;
-  font-size: 0.7rem;
-  color: #777;
+  margin-top: 20px;
+  font-size: 0.75rem;
+  color: #adb5bd;
 }
 
 /* --- DIFERENCIAIS --- */
 .coringa-app .features {
-  padding: 50px 0;
+  padding: 80px 0;
   text-align: center;
   background: #fff;
-  color: #333;
+  color: #1a1a1a;
+}
+
+.coringa-app .features h2 {
+  font-size: 2.2rem;
+  margin-bottom: 50px;
 }
 
 .coringa-app .features h2 span {
@@ -306,36 +429,61 @@
 
 .coringa-app .feature-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-  margin-top: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
 }
 
-.coringa-app .feature-item i {
-  font-size: 2rem;
+.coringa-app .feature-item {
+  padding: 40px 30px;
+  background: #fafafa;
+  border-radius: 20px;
+  transition: all 0.3s;
+  border: 1px solid #f0f0f0;
+}
+
+.coringa-app .feature-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+  background: #fff;
+}
+
+.coringa-app .feature-item .icon-wrapper {
+  width: 70px;
+  height: 70px;
+  background: rgba(0,0,0,0.03);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 25px auto;
   color: var(--primary);
-  margin-bottom: 15px;
+  transition: all 0.3s;
+}
+
+.coringa-app .feature-item:hover .icon-wrapper {
+  background: var(--primary);
+  color: #fff;
+  transform: rotate(-5deg) scale(1.1);
 }
 
 .coringa-app .feature-item h3 {
-  margin-bottom: 10px;
-  font-size: 1.1rem;
-  min-height: 2.5em;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+  color: var(--secondary);
 }
 
 .coringa-app .feature-item p {
-  font-size: 0.9rem;
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.5;
 }
 
 /* --- FOOTER --- */
 .coringa-app footer {
   background: var(--secondary);
-  color: #ccc;
-  padding: 20px 0;
-  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+  padding: 30px 0;
+  font-size: 0.85rem;
 }
 
 .coringa-app .footer-row {
@@ -343,22 +491,24 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 20px;
 }
 
 .coringa-app .footer-brand {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   color: white;
-  font-weight: 700;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
   text-transform: uppercase;
 }
 
 .coringa-app .footer-brand img {
-  height: 25px;
+  height: 30px;
   width: auto;
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 .coringa-app .footer-brand span {
@@ -367,17 +517,24 @@
 
 .coringa-app .footer-text {
   text-align: right;
-  opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .coringa-app .hero h1 { font-size: 2.2rem; }
+  .coringa-app .calculator-box { padding: 25px 20px; }
+  .coringa-app .modal-content { padding: 30px 20px; }
 }
 
 @media (max-width: 480px) {
-  .coringa-app .container { padding: 0 15px; }
-  .coringa-app .logo { font-size: 1rem; }
-  .coringa-app .logo img { height: 28px; }
-  .coringa-app .btn-zap-header { font-size: 0.8rem; padding: 6px 12px; }
+  .coringa-app header { padding: 10px 0; }
+  .coringa-app .logo { font-size: 1.1rem; }
+  .coringa-app .logo img { height: 30px; }
+  .coringa-app .btn-zap-header { font-size: 0.85rem; padding: 8px 16px; }
   .coringa-app .btn-zap-header span { display: none; }
-  .coringa-app .hero h1 { font-size: 1.6rem; }
-  .coringa-app .total-value { font-size: 1.8rem; }
-  .coringa-app .footer-row { flex-direction: column; text-align: center; }
+  .coringa-app .hero h1 { font-size: 1.8rem; }
+  .coringa-app .hero p { font-size: 1rem; }
+  .coringa-app .total-value { font-size: 2.2rem; }
+  .coringa-app .footer-row { flex-direction: column; text-align: center; justify-content: center; }
+  .coringa-app .footer-brand { justify-content: center; }
   .coringa-app .footer-text { text-align: center; }
 }
