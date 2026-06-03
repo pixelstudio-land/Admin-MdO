@@ -6,6 +6,7 @@ import type { Session } from '@supabase/supabase-js';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Layout from './components/Layout';
+import MachineForm from './pages/MachineForm';
 
 export default function App() {
   const [session, setSession] = useState<Session | null>(null);
@@ -49,7 +50,7 @@ export default function App() {
           element={session ? <Layout /> : <Navigate to="/login" replace />}
         >
           <Route index element={<Dashboard />} />
-          {/* Adicionaremos a rota de /edit/:id depois */}
+          <Route path="/machine/:id" element={<MachineForm />} />
         </Route>
       </Routes>
     </BrowserRouter>
