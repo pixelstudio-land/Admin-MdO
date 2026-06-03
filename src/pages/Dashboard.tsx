@@ -156,7 +156,7 @@ export default function Dashboard() {
                         />
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-right relative" ref={openMenu === tenant.id ? menuRef : null}>
+                    <td className="px-6 py-4 text-right relative">
                       <button
                         onClick={() => setOpenMenu(openMenu === tenant.id ? null : tenant.id)}
                         className="text-neutral-500 hover:text-white p-2 hover:bg-white/5 rounded-lg transition-colors"
@@ -165,7 +165,7 @@ export default function Dashboard() {
                       </button>
 
                       {openMenu === tenant.id && (
-                        <div className="absolute right-4 top-full mt-1 w-44 bg-neutral-800 border border-white/10 rounded-xl shadow-2xl z-50 py-1 overflow-hidden">
+                        <div ref={menuRef} className="absolute right-4 top-full mt-1 w-44 bg-neutral-800 border border-white/10 rounded-xl shadow-2xl z-50 py-1 overflow-hidden">
                           <button
                             onClick={() => { navigate(`/machine/${tenant.id}`); setOpenMenu(null); }}
                             className="flex items-center w-full px-4 py-2.5 text-sm text-neutral-300 hover:bg-white/5 hover:text-white transition-colors"
