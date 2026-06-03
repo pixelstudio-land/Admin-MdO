@@ -35,7 +35,7 @@ export default function App() {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/Admin-MdO">
       <Routes>
         {/* Rota pública */}
         <Route 
