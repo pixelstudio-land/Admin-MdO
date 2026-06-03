@@ -117,7 +117,7 @@ export default function MachineForm() {
               {isNew ? 'Nova Máquina' : `Editando: ${nomeMarca1} ${nomeMarca2}`}
             </h2>
             <p className="text-neutral-400 text-sm mt-0.5">
-              {isNew ? 'Preencha os dados do novo cliente' : `${subdominio}.superweb.com`}
+              {isNew ? 'Preencha os dados do novo cliente' : `${subdominio}.superweb.fun`}
             </p>
           </div>
         </div>
@@ -166,7 +166,7 @@ export default function MachineForm() {
                   placeholder="empresa-xyz"
                   className="flex-1 bg-neutral-950 border border-neutral-700 rounded-l-lg px-4 py-2.5 text-white placeholder-neutral-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
                 />
-                <span className="bg-neutral-800 border border-l-0 border-neutral-700 rounded-r-lg px-4 py-2.5 text-neutral-400 text-sm">.superweb.com</span>
+                <span className="bg-neutral-800 border border-l-0 border-neutral-700 rounded-r-lg px-4 py-2.5 text-neutral-400 text-sm">.superweb.fun</span>
               </div>
             </div>
             <div>

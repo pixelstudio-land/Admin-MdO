@@ -122,9 +122,9 @@ export default function Dashboard() {
                   <tr key={tenant.id} className="hover:bg-white/[0.02] transition-colors group">
                     <td className="px-6 py-4 font-medium text-white">
                       <div className="flex items-center space-x-2">
-                        <span>{tenant.subdominio}.superweb.com</span>
+                        <span>{tenant.subdominio}.superweb.fun</span>
                         <a
-                          href={`http://${tenant.subdominio}.superweb.com`}
+                          href={`http://${tenant.subdominio}.superweb.fun`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="opacity-0 group-hover:opacity-100 transition-opacity text-neutral-500 hover:text-blue-400"
