@@ -1,15 +1,13 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
-import { Plus, Search, MoreVertical, Edit2, Trash2, ExternalLink, Globe } from 'lucide-react';
+import { Plus, Search, Edit2, Trash2, ExternalLink, Globe } from 'lucide-react';
 
 export default function Dashboard() {
   const [tenants, setTenants] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [deleting, setDeleting] = useState<string | null>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,13 +15,7 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setOpenMenu(null);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    fetchTenants();
   }, []);
 
   const fetchTenants = async () => {
@@ -59,7 +51,6 @@ export default function Dashboard() {
     await supabase.from('clientes').delete().eq('id', id);
     setTenants(prev => prev.filter(t => t.id !== id));
     setDeleting(null);
-    setOpenMenu(null);
   };
 
   const filtered = tenants.filter(t =>
@@ -173,34 +164,24 @@ export default function Dashboard() {
                         />
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-right relative">
-                      <button
-                        onClick={() => setOpenMenu(openMenu === tenant.id ? null : tenant.id)}
-                        className="text-neutral-500 hover:text-white p-2 hover:bg-white/5 rounded-lg transition-colors"
-                      >
-                        <MoreVertical className="w-4 h-4" />
-                      </button>
-
-                      {openMenu === tenant.id && (
-                        <div ref={menuRef} className="absolute right-4 top-full mt-1 w-44 bg-neutral-800 border border-white/10 rounded-xl shadow-2xl z-50 py-1 overflow-hidden">
-                          <button
-                            onClick={() => { navigate(`/machine/${tenant.id}`); setOpenMenu(null); }}
-                            className="flex items-center w-full px-4 py-2.5 text-sm text-neutral-300 hover:bg-white/5 hover:text-white transition-colors"
-                          >
-                            <Edit2 className="w-4 h-4 mr-3 text-blue-400" />
-                            Editar
-                          </button>
-                          <div className="my-1 border-t border-white/5" />
-                          <button
-                            onClick={() => handleDelete(tenant.id, `${tenant.nome_marca1} ${tenant.nome_marca2}`, tenant.logo_url, tenant.fundo_url)}
-                            disabled={deleting === tenant.id}
-                            className="flex items-center w-full px-4 py-2.5 text-sm text-red-400 hover:bg-red-500/10 transition-colors disabled:opacity-50"
-                          >
-                            <Trash2 className="w-4 h-4 mr-3" />
-                            {deleting === tenant.id ? 'Excluindo...' : 'Excluir'}
-                          </button>
-                        </div>
-                      )}
+                    <td className="px-6 py-4 text-right">
+                      <div className="flex items-center justify-end space-x-2">
+                        <button
+                          onClick={() => navigate(`/machine/${tenant.id}`)}
+                          className="p-2 text-blue-400 hover:text-blue-300 hover:bg-blue-400/10 rounded-lg transition-colors"
+                          title="Editar"
+                        >
+                          <Edit2 className="w-5 h-5" />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(tenant.id, `${tenant.nome_marca1} ${tenant.nome_marca2}`, tenant.logo_url, tenant.fundo_url)}
+                          disabled={deleting === tenant.id}
+                          className="p-2 text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded-lg transition-colors disabled:opacity-50"
+                          title="Excluir"
+                        >
+                          <Trash2 className="w-5 h-5" />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))
