@@ -26,10 +26,6 @@ export default function Layout() {
             <LayoutDashboard className="mr-3 h-5 w-5" />
             Dashboard
           </a>
-          <a href="#" className="flex items-center px-4 py-3 text-sm font-medium rounded-lg text-neutral-400 hover:bg-white/5 hover:text-white transition-colors">
-            <Settings className="mr-3 h-5 w-5" />
-            Configurações
-          </a>
         </nav>
 
         <div className="p-4 border-t border-white/5">
