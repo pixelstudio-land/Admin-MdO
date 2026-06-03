@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Layout from './components/Layout';
 import MachineForm from './pages/MachineForm';
+import CoringaMachine from './pages/CoringaMachine';
 
 export default function App() {
   const [session, setSession] = useState<Session | null>(null);
@@ -35,8 +36,24 @@ export default function App() {
     );
   }
 
+  const hostname = window.location.hostname;
+  const isCoringa = hostname.endsWith('.superweb.fun') && !hostname.startsWith('admin.');
+  const subdominio = hostname.split('.')[0];
+  
+  // Developer feature to test Coringa machine locally: http://localhost:5173/?cliente=empresa-xyz
+  const queryParams = new URLSearchParams(window.location.search);
+  const clienteParam = queryParams.get('cliente');
+
+  if (isCoringa || clienteParam) {
+    return <CoringaMachine subdominio={clienteParam || subdominio} />;
+  }
+
+  // Se for admin.superweb.fun o basename é /, senão é /Admin-MdO
+  const isCustomDomain = hostname.endsWith('.superweb.fun');
+  const basename = isCustomDomain ? '/' : '/Admin-MdO';
+
   return (
-    <BrowserRouter basename="/Admin-MdO">
+    <BrowserRouter basename={basename}>
       <Routes>
         {/* Rota pública */}
         <Route 
