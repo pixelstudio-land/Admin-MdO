@@ -48,12 +48,8 @@ export default function App() {
     return <CoringaMachine subdominio={clienteParam || subdominio} />;
   }
 
-  // Se for admin.superweb.fun o basename é /, senão é /Admin-MdO
-  const isCustomDomain = hostname.endsWith('.superweb.fun');
-  const basename = isCustomDomain ? '/' : '/Admin-MdO';
-
   return (
-    <BrowserRouter basename={basename}>
+    <BrowserRouter>
       <Routes>
         {/* Rota pública */}
         <Route 
