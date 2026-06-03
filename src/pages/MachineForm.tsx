@@ -26,6 +26,17 @@ const DEFAULT_BONUS: Bonus[] = [
   { titulo: 'Mão de Obra', subtitulo: 'Incluso', strike: '', gratis: false },
 ];
 
+const PREDEFINED_BACKGROUNDS = [
+  'https://images.unsplash.com/photo-1581858326156-313e9a5a3a79?q=80&w=1200',
+  'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200',
+  'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=1200',
+  'https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1200',
+  'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1200',
+  'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=1200',
+  'https://images.unsplash.com/photo-1615529182904-14819c35db37?q=80&w=1200',
+  'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=1200',
+];
+
 type Tab = 'dados' | 'cores' | 'pisos' | 'bonus';
 
 export default function MachineForm() {
@@ -273,20 +284,35 @@ export default function MachineForm() {
             <label className="block text-sm font-medium text-neutral-300 mb-2">
               <Image className="inline w-4 h-4 mr-1.5" />Imagem de Fundo (Hero)
             </label>
-            <div className="flex items-center space-x-4 bg-neutral-950 border border-neutral-700 rounded-lg p-2">
-              {fundoUrl ? (
-                <div className="relative flex-1">
-                  <div className="h-24 w-full bg-cover bg-center rounded" style={{ backgroundImage: `url(${fundoUrl})` }}></div>
-                  <button onClick={() => setFundoUrl('')} className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1.5 shadow hover:bg-red-600 transition">
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                </div>
-              ) : (
-                <label className="flex-1 flex items-center justify-center h-24 border border-dashed border-neutral-600 hover:border-blue-500 rounded cursor-pointer transition text-neutral-500 hover:text-blue-500">
-                  {uploadingFundo ? <Loader2 className="w-5 h-5 animate-spin" /> : <span className="text-sm">Clique para enviar imagem de fundo</span>}
-                  <input type="file" accept="image/*" className="hidden" onChange={e => handleImageUpload(e, false)} disabled={uploadingFundo} />
-                </label>
-              )}
+            <div className="bg-neutral-950 p-4 rounded-xl border border-neutral-700">
+              <p className="text-xs text-neutral-400 mb-3">Escolha um fundo da galeria ou faça o upload de um personalizado:</p>
+              
+              <div className="grid grid-cols-4 gap-2 mb-4">
+                {PREDEFINED_BACKGROUNDS.map((url, i) => (
+                  <div 
+                    key={i} 
+                    onClick={() => setFundoUrl(url)}
+                    className={`h-16 rounded cursor-pointer bg-cover bg-center border-2 transition-all ${fundoUrl === url ? 'border-blue-500 scale-105' : 'border-transparent opacity-50 hover:opacity-100'}`}
+                    style={{ backgroundImage: `url(${url})` }}
+                  />
+                ))}
+              </div>
+
+              <div className="flex items-center space-x-4 bg-neutral-900 border border-neutral-700 rounded-lg p-2">
+                {fundoUrl && !PREDEFINED_BACKGROUNDS.includes(fundoUrl) ? (
+                  <div className="relative flex-1">
+                    <div className="h-24 w-full bg-cover bg-center rounded" style={{ backgroundImage: `url(${fundoUrl})` }}></div>
+                    <button onClick={() => setFundoUrl('')} className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1.5 shadow hover:bg-red-600 transition">
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                ) : (
+                  <label className="flex-1 flex items-center justify-center h-12 border border-dashed border-neutral-600 hover:border-blue-500 rounded cursor-pointer transition text-neutral-500 hover:text-blue-500">
+                    {uploadingFundo ? <Loader2 className="w-5 h-5 animate-spin" /> : <span className="text-sm">Upload de imagem personalizada</span>}
+                    <input type="file" accept="image/*" className="hidden" onChange={e => handleImageUpload(e, false)} disabled={uploadingFundo} />
+                  </label>
+                )}
+              </div>
             </div>
           </div>
           {/* Color Preview */}

@@ -36,9 +36,26 @@ export default function Dashboard() {
     setLoading(false);
   };
 
-  const handleDelete = async (id: string, nome: string) => {
+  const handleDelete = async (id: string, nome: string, logoUrl?: string, fundoUrl?: string) => {
     if (!confirm(`Tem certeza que quer excluir a máquina "${nome}"? Essa ação não pode ser desfeita.`)) return;
     setDeleting(id);
+
+    const deleteFile = async (url?: string) => {
+      if (!url || !url.includes('supabase.co')) return;
+      try {
+        const parts = url.split('/public/assets/');
+        if (parts.length > 1) {
+          const path = parts[1];
+          await supabase.storage.from('assets').remove([path]);
+        }
+      } catch (e) {
+        console.error('Erro ao deletar arquivo', e);
+      }
+    };
+
+    await deleteFile(logoUrl);
+    await deleteFile(fundoUrl);
+
     await supabase.from('clientes').delete().eq('id', id);
     setTenants(prev => prev.filter(t => t.id !== id));
     setDeleting(null);
@@ -175,7 +192,7 @@ export default function Dashboard() {
                           </button>
                           <div className="my-1 border-t border-white/5" />
                           <button
-                            onClick={() => handleDelete(tenant.id, `${tenant.nome_marca1} ${tenant.nome_marca2}`)}
+                            onClick={() => handleDelete(tenant.id, `${tenant.nome_marca1} ${tenant.nome_marca2}`, tenant.logo_url, tenant.fundo_url)}
                             disabled={deleting === tenant.id}
                             className="flex items-center w-full px-4 py-2.5 text-sm text-red-400 hover:bg-red-500/10 transition-colors disabled:opacity-50"
                           >
