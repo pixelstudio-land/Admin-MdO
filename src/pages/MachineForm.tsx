@@ -54,6 +54,7 @@ export default function MachineForm() {
   const [nomeMarca1, setNomeMarca1] = useState('');
   const [nomeMarca2, setNomeMarca2] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
+  const [pixelId, setPixelId] = useState('');
   const [corPrimaria, setCorPrimaria] = useState('#CFA257');
   const [corSecundaria, setCorSecundaria] = useState('#000000');
   const [logoUrl, setLogoUrl] = useState('');
@@ -108,6 +109,7 @@ export default function MachineForm() {
       setNomeMarca1(data.nome_marca1 || '');
       setNomeMarca2(data.nome_marca2 || '');
       setWhatsapp(data.whatsapp || '');
+      setPixelId(data.pixel_id || '');
       setCorPrimaria(data.cor_primaria || '#CFA257');
       setCorSecundaria(data.cor_secundaria || '#000000');
       setLogoUrl(data.logo_url || '');
@@ -123,7 +125,7 @@ export default function MachineForm() {
     setSaving(true);
     const payload = {
       subdominio, nome_marca1: nomeMarca1, nome_marca2: nomeMarca2,
-      whatsapp, cor_primaria: corPrimaria, cor_secundaria: corSecundaria,
+      whatsapp, pixel_id: pixelId, cor_primaria: corPrimaria, cor_secundaria: corSecundaria,
       logo_url: logoUrl, fundo_url: fundoUrl,
       json_pisos: pisos, json_opcoes_piso: opcoesPiso, json_bonus: bonus,
     };
@@ -223,11 +225,17 @@ export default function MachineForm() {
               <label className="block text-sm font-medium text-neutral-300 mb-2">Nome da Marca (parte 2 — em destaque)</label>
               <input value={nomeMarca2} onChange={e => setNomeMarca2(e.target.value)} placeholder="DECOR" className="w-full bg-neutral-950 border border-neutral-700 rounded-lg px-4 py-2.5 text-white placeholder-neutral-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" />
             </div>
-            <div className="col-span-2">
+            <div className="col-span-1">
               <label className="block text-sm font-medium text-neutral-300 mb-2">
                 <Phone className="inline w-4 h-4 mr-1.5" />WhatsApp (somente números)
               </label>
               <input value={whatsapp} onChange={e => setWhatsapp(e.target.value)} placeholder="5511999999999" className="w-full bg-neutral-950 border border-neutral-700 rounded-lg px-4 py-2.5 text-white placeholder-neutral-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" />
+            </div>
+            <div className="col-span-1">
+              <label className="block text-sm font-medium text-neutral-300 mb-2">
+                ID do Facebook Pixel (Opcional)
+              </label>
+              <input value={pixelId} onChange={e => setPixelId(e.target.value)} placeholder="Ex: 1234567890" className="w-full bg-neutral-950 border border-neutral-700 rounded-lg px-4 py-2.5 text-white placeholder-neutral-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" />
             </div>
           </div>
           {/* Live Preview */}

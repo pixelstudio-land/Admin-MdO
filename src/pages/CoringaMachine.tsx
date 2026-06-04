@@ -46,7 +46,22 @@ export default function CoringaMachine({ subdominio }: CoringaMachineProps) {
     }
     fetchData();
   }, [subdominio]);
-
+  useEffect(() => {
+    if (data?.pixel_id) {
+      const pid = data.pixel_id;
+      !function(f: any,b: any,e: any,v: any,n?: any,t?: any,s?: any)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      
+      (window as any).fbq('init', pid);
+      (window as any).fbq('track', 'PageView');
+    }
+  }, [data?.pixel_id]);
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-neutral-950">
@@ -84,6 +99,10 @@ export default function CoringaMachine({ subdominio }: CoringaMachineProps) {
     const total = met * preco;
     const formatado = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     setValorFinal(formatado);
+
+    if (data?.pixel_id && (window as any).fbq) {
+      (window as any).fbq('track', 'Lead', { value: total, currency: 'BRL' });
+    }
 
     // Get names for WhatsApp
     const pisoAtualTexto = data.json_opcoes_piso?.find((o: any) => o.valor === pisoAtual)?.texto || pisoAtual;
